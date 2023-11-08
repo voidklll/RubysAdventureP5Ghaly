@@ -5,22 +5,28 @@ using static UnityEditor.Searcher.SearcherWindow.Alignment;
 
 public class RubyController : MonoBehaviour
 {
-    Rigidbody rigidbody2d;
+    public float speed = 3.0f;
+
+    public int maxHealth = 5;
+    int currentHealth;
+
+    Rigidbody2D rigidbody2d;
     float horizontal;
     float vertical;
 
     // Start is called before the first frame update
     void Start()
     {
-        rigidbody2d = GetComponent < Rigidbody2D();
-
+        rigidbody2d = GetComponent < Rigidbody2D >();
+        currentHealth = maxHealth;
+        currentHealth = 1;
     }
 
     // Update is called once per frame
     void Update()
     {
-        float horizontal = Input.GetAxis("Horizontal");
-        float vertical = Input.GetAxis("Vertical");
+        horizontal = Input.GetAxis("Horizontal");
+        vertical = Input.GetAxis("Vertical");
     }
     void FixedUpdate()
     {
@@ -30,4 +36,11 @@ public class RubyController : MonoBehaviour
 
         rigidbody2d.MovePosition(position);
     }
+
+    void ChangeHealth(int amount)
+    {
+        currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
+        Debug.Log(currentHealth + "/" + maxHealth);
+    }
+
 }
